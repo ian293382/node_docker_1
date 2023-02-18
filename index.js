@@ -2,7 +2,7 @@ const express = require("express")
 
 const app = express()
 
-app.get("/" (req, res) =>{
+app.get("/", (req, res) =>{
   res.send("<h2>Hi There</h2>");
 });
 
