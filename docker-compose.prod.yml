@@ -2,7 +2,7 @@ version: '3'
 services:
   node-app:
     build:
-      context: .
+      context:  .
       args:
         NODE_ENV: production
     environment:
