@@ -31,6 +31,9 @@ app.get("/", (req, res) =>{
   res.send("<h2>Hi There@@</h2>");
 });
 
+//localhost:3000/api/v1/post
+app.use("/api/v1/posts", postRouter)
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`listening on port ${port}`));
