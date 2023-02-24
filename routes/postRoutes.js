@@ -6,14 +6,14 @@ const router = express.Router();
 
 //localhost:3000/:id
 router
-.roetr("/")
-.get(postController.getAllPosts)
-.post(postController.createPost);
+  .route("/")
+  .get(postController.getAllPosts)
+  .post(postController.createPost);
 
 router
-.route("/:id")
-.get(postController.getOnePost)
-.patch(postController.updatePost)
-.delete(postController.deletePost);
+  .route("/:id")
+  .get(postController.getOnePost)
+  .patch(postController.updatePost)
+  .delete(postController.deletePost);
 
 module.exports = router;
