@@ -12,6 +12,7 @@ exports.getAllPosts = async (req, res, next) => {
       },
     });
   } catch (e) {
+    console.log(e); // can see what happen
     res.status(400).json({
       status: "fail",
     });
