@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const redis = require("redis");
-let RedisStore = require("connect-redis").default;
+let RedisStore = require("connect-redis");
 
 const {
         MONGO_USER,
@@ -43,7 +43,7 @@ connectWithRetry();
 
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }),
+    // store: new RedisStore({ client: redisClient }),
     secret: SESSION_SECRET,
     cookie: {
       secure: false,
