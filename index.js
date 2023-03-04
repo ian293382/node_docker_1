@@ -1,12 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const redis = require("redis");
+let RedisStore = require("connect-redis").default;
 
 const {
         MONGO_USER,
         MONGO_PASSWORD,
         MONGO_IP,
         MONGO_PORT,
+        REDIS_URL,
+        SESSION_SECRET,
+        REDIS_PORT,
        } = require("./config/config");
+
+let redisClient = redis.createClient({
+legacyMode: true,
+host: REDIS_URL,
+port: REDIS_PORT,
+});
 
 const postRouter = require("./routes/postRoutes");
 const userRouter = require("./routes/userRoutes");
@@ -18,6 +30,7 @@ const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_
 
 const connectWithRetry = () => {
   mongoose
+    .set('strictQuery', false)
     .connect(mongoURL)
     .then(() => console.log("succesfully connected to DB"))
     .catch((e) => {
@@ -27,6 +40,20 @@ const connectWithRetry = () => {
 };
 
 connectWithRetry();
+
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: SESSION_SECRET,
+    cookie: {
+      secure: false,
+      resave: false,
+      saveUninitialized: false,
+      httpOnly: true,
+      maxAge: 30000,
+    },
+  })
+);
 
 app.use(express.json());
 
